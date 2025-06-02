@@ -6,20 +6,22 @@
 Point::Point(double x, double y){
     coord_x = x;
     coord_y = y;
-    previous = NULL;
-    next = NULL;
+    suivants = new std::vector<std::weak_ptr<Point>>;
 }
 
 Point::Point(){
     coord_x = 0;
     coord_y = 0;
-    previous = NULL;
-    next = NULL;
+    suivants = new std::vector<std::weak_ptr<Point>>;
 }
 
-double Point::dist(Point* point){
-    if (point == NULL) {return -1;}
-    return sqrt(std::pow(point->x()-coord_x, 2) + std::pow(point->y()-coord_y, 2));
+Point::~Point(){
+    delete suivants;
+}
+
+double Point::dist(std::shared_ptr<Point> point){
+    if (!point) { return -1; }
+    return sqrt(std::pow(point->x() - coord_x, 2) + std::pow(point->y() - coord_y, 2));
 }
 
 double Point::x(){ return coord_x; }
